@@ -9,6 +9,7 @@ const labelDureza   = document.querySelector( '#labelDureza' );
 const labelSal      = document.querySelector( '#labelSal' );
 const labelCapInt   = document.querySelector( '#labelCapacidadIntercambio' );
 const labelCantAgua = document.querySelector( '#labelCantidadAgua' );
+const infoTanque    = document.querySelector( '#infoTanque' );
 
 
 
@@ -71,7 +72,35 @@ const despliegaCapacidadIntercambio = ( ) => {
 }
 
 const despliegaCantidadAgua = ( ) => {
-    labelCantAgua.textContent=`Cantidad de agua que puede suavizar: ${ (cantAgua).toFixed(0)} L`;
+    let txt='<p>'
+    txt += `Cantidad aproximada de agua que puede suavizar: ${ (cantAgua).toFixed(0)} litros<br><br>`;
+    if(!!suavizador.tanResina.servicio){
+        const Q=Number(suavizador.tanResina.servicio)*3.7854;
+        const tiempo  = cantAgua/(60*Q);
+        const horas   = Math.floor(tiempo);
+        const minutos = Math.ceil((tiempo-horas)*60);
+
+        txt +='Tiempo aproximado para suavizar el agua: ';
+        txt +=`${ horas } horas`;
+        txt +=` ${minutos} minutos<br>`;
+    }
+    txt += '</p>';
+    labelCantAgua.innerHTML=txt;
+}
+
+const despliegaInfoTanque = ( ) => {
+    let txt='<p>'
+    txt += `Tamaño del tanque: ${ suavizador.tanResina.diametro }"x${ suavizador.tanResina.alto }"<br>`;
+    if(!!suavizador.tanResina.servicio){
+        txt += `Servicio: ${suavizador.tanResina.servicio} gpm
+        = ${(Number(suavizador.tanResina.servicio)*3.7854).toFixed(2)} lpm<br>`;
+        txt += `Retrolavado: ${suavizador.tanResina.retrolavado} gpm
+        = ${(Number(suavizador.tanResina.retrolavado)*3.7854).toFixed(2)} lpm<br>`;
+    }
+    
+    txt += '</p>';
+    infoTanque.innerHTML=txt;
+
 }
 
 
@@ -88,8 +117,9 @@ const despliega = () =>{
     cantAgua=capIntercambio/dureza;
     despliegaDureza();
     despliegaCantidadSal();
-    despliegaCapacidadIntercambio();
+    //despliegaCapacidadIntercambio();
     despliegaCantidadAgua();
+    despliegaInfoTanque();
 }
 
 init();
