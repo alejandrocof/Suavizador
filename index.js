@@ -73,7 +73,7 @@ const despliegaCapacidadIntercambio = ( ) => {
 }
 
 const despliegaCantidadAgua = ( ) => {
-    let txt='<p>'
+    let txt='<p><b>'
     txt += `Cantidad aproximada de agua que puede suavizar: ${ (cantAgua).toFixed(0)} litros<br><br>`;
     const Q=servicio*3.7854;
     const tiempo  = cantAgua/(60*Q);
@@ -83,7 +83,7 @@ const despliegaCantidadAgua = ( ) => {
     txt +='Tiempo aproximado para suavizar el agua: ';
     txt +=`${ horas } horas`;
     txt +=` ${minutos} minutos<br>`;
-    txt += '</p>';
+    txt += '</b></p>';
     labelCantAgua.innerHTML=txt;
 }
 
