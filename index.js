@@ -18,6 +18,7 @@ let dureza=200;
 let sal=5.5;
 let capIntercambio;
 let cantAgua;
+let servicio;
 
 const addSuav = ( suav, index ) => {
     const opt = document.createElement('option');
@@ -74,16 +75,14 @@ const despliegaCapacidadIntercambio = ( ) => {
 const despliegaCantidadAgua = ( ) => {
     let txt='<p>'
     txt += `Cantidad aproximada de agua que puede suavizar: ${ (cantAgua).toFixed(0)} litros<br><br>`;
-    if(!!suavizador.tanResina.servicio){
-        const Q=Number(suavizador.tanResina.servicio)*3.7854;
-        const tiempo  = cantAgua/(60*Q);
-        const horas   = Math.floor(tiempo);
-        const minutos = Math.ceil((tiempo-horas)*60);
+    const Q=servicio*3.7854;
+    const tiempo  = cantAgua/(60*Q);
+    const horas   = Math.floor(tiempo);
+    const minutos = Math.ceil((tiempo-horas)*60);
 
-        txt +='Tiempo aproximado para suavizar el agua: ';
-        txt +=`${ horas } horas`;
-        txt +=` ${minutos} minutos<br>`;
-    }
+    txt +='Tiempo aproximado para suavizar el agua: ';
+    txt +=`${ horas } horas`;
+    txt +=` ${minutos} minutos<br>`;
     txt += '</p>';
     labelCantAgua.innerHTML=txt;
 }
@@ -91,21 +90,12 @@ const despliegaCantidadAgua = ( ) => {
 const despliegaInfoTanque = ( ) => {
     let txt='<p>'
     txt += `Tamaño del tanque: ${ suavizador.tanResina.diametro }"x${ suavizador.tanResina.alto }"<br>`;
-    if(!!suavizador.tanResina.servicio){
-        txt += `Servicio: ${suavizador.tanResina.servicio} gpm
-        = ${(Number(suavizador.tanResina.servicio)*3.7854).toFixed(2)} lpm<br>`;
-        txt += `Retrolavado: ${suavizador.tanResina.retrolavado} gpm
-        = ${(Number(suavizador.tanResina.retrolavado)*3.7854).toFixed(2)} lpm<br>`;
-    }
-    
+    txt += `Flujo normal: ${servicio} gpm = ${(servicio*3.7854).toFixed(2)} lpm<br>`;
     txt += '</p>';
     infoTanque.innerHTML=txt;
 
 }
 
-
-//Capacidad de intercambio iónico
-// =(473366+365296*F$1-21888*F$1*F$1)*$E5
 const init = () => {
     suavizadores.forEach( addSuav );
     rangoSal();
@@ -115,11 +105,13 @@ const init = () => {
 const despliega = () =>{
     capIntercambio=(473366+365296*sal-21888*sal*sal)*suavizador.tanResina.vol;
     cantAgua=capIntercambio/dureza;
+    servicio=Number(suavizador.tanResina.vol)*5;
+    despliegaInfoTanque();
     despliegaDureza();
     despliegaCantidadSal();
     //despliegaCapacidadIntercambio();
     despliegaCantidadAgua();
-    despliegaInfoTanque();
+    
 }
 
 init();
