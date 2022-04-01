@@ -18,4 +18,12 @@
     align-items: center;
   }
 
+  .contenedor-div{
+    position:relative;
+  }
+  .contador{
+   position:absolute;
+   bottom:0px;
+   right:0px;
+  }
   
