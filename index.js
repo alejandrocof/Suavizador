@@ -93,7 +93,7 @@ const despliegaCantidadAgua = ( ) => {
 }
 
 const despliegaInfoTanque = ( ) => {
-    let txt='<p>'
+    let txt='<p align="center">'
     txt += `Tamaño del tanque: ${ suavizador.tanResina.diametro }"x${ suavizador.tanResina.alto }"<br>`;
     txt += `Cantidad de resina: ${suavizador.tanResina.vol} ft³ = ${(Number(suavizador.tanResina.vol)*28.3168).toFixed(2)} litros<br>`;
     txt += `Caudal mínimo: ${(Qmin).toFixed(2)} lpm<br>`;
