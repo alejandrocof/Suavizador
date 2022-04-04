@@ -18,7 +18,8 @@ let dureza=200;
 let sal=5.5;
 let capIntercambio;
 let cantAgua;
-let servicio;
+let Qmin;
+let Qmax;
 
 const addSuav = ( suav, index ) => {
     const opt = document.createElement('option');
@@ -75,14 +76,18 @@ const despliegaCapacidadIntercambio = ( ) => {
 const despliegaCantidadAgua = ( ) => {
     let txt='<p><b>'
     txt += `Cantidad aproximada de agua que puede suavizar: ${ (cantAgua).toFixed(0)} litros<br><br>`;
-    const Q=servicio*3.7854;
-    const tiempo  = cantAgua/(60*Q);
-    const horas   = Math.floor(tiempo);
-    const minutos = Math.ceil((tiempo-horas)*60);
+    const tmin  = cantAgua/(60*Qmax);
+    const hmin   = Math.floor(tmin);
+    const minmin = Math.ceil((tmin-hmin)*60);
+    const tmax  = cantAgua/(60*Qmin);
+    const hmax   = Math.floor(tmax);
+    const minmax = Math.ceil((tmax-hmax)*60);
 
-    txt +='Tiempo aproximado para suavizar el agua: ';
-    txt +=`${ horas } horas`;
-    txt +=` ${minutos} minutos<br>`;
+    txt +='Tiempo de trabajo: ';
+    txt +=`(${ hmin } horas`;
+    txt +=` ${minmin} minutos,`;
+    txt +=` ${ hmax } horas`;
+    txt +=` ${minmax} minutos)<br>`;
     txt += '</b></p>';
     labelCantAgua.innerHTML=txt;
 }
@@ -90,7 +95,9 @@ const despliegaCantidadAgua = ( ) => {
 const despliegaInfoTanque = ( ) => {
     let txt='<p>'
     txt += `Tamaño del tanque: ${ suavizador.tanResina.diametro }"x${ suavizador.tanResina.alto }"<br>`;
-    txt += `Flujo normal: ${servicio} gpm = ${(servicio*3.7854).toFixed(2)} lpm<br>`;
+    txt += `Cantidad de resina: ${suavizador.tanResina.vol} ft³ = ${(Number(suavizador.tanResina.vol)*28.3168).toFixed(2)} litros<br>`;
+    txt += `Caudal mínimo: ${(Qmin).toFixed(2)} lpm<br>`;
+    txt += `Caudal máximo: ${(Qmax).toFixed(2)} lpm<br>`;
     txt += '</p>';
     infoTanque.innerHTML=txt;
 
@@ -103,9 +110,14 @@ const init = () => {
 }
 
 const despliega = () =>{
-    capIntercambio=(473366+365296*sal-21888*sal*sal)*suavizador.tanResina.vol;
+    //capIntercambio=(473366+365296*sal-21888*sal*sal)*suavizador.tanResina.vol;
+    capIntercambio=(2115400*(1-Math.exp(-0.35643*sal)))*suavizador.tanResina.vol;
     cantAgua=capIntercambio/dureza;
-    servicio=Number(suavizador.tanResina.vol)*5;
+    const d=Number(suavizador.tanResina.diametro)*0.254;//convierte de in a dm
+    const A=Math.PI*d*d/4;//área en dm²
+    Qmin=A*5/3;//Vmin=10m/h=100dm/60min=5/3dm/min
+    Qmax=A*10;//Vmax=60m/h=600dm/60min=10dm/min
+    //Qmin=Number(suavizador.tanResina.vol)*5;
     despliegaInfoTanque();
     despliegaDureza();
     despliegaCantidadSal();
