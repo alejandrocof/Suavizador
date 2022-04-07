@@ -102,7 +102,7 @@ const rangoQ = ( ) => {
 }
 
 const despliegaQ = () => {
-    let txt='<p align="center">'
+    let txt='<p align="center">';
     txt += `Caudal: ${Q} lpm<br>`;
     // txt += `<br>*Se sugiere un caudal dentro del intervalo:`;
     // txt += `(${(Qmin).toFixed(2)} lpm, ${(Qmax).toFixed(2)} lpm)`;
@@ -116,7 +116,14 @@ const despliegaDureza = () => {
 }
 
 const despliegaCantidadSal = ( ) => {
-    labelSal.textContent=`Cantidad de sal: ${Number(sal*suavizador.tanResina.vol).toFixed(2)} kg`;
+    let txt='<p align="center">';
+    txt += `Cantidad de sal: ${(sal*suavizador.tanResina.vol).toFixed(2)} kg<br><br>`;
+    txt += `Para preparar la salmuera se requiere:<br>`;
+    txt += `${Math.round(2*sal*suavizador.tanResina.vol/0.360)/2} litros de agua `;
+    txt += `y por lo menos ${(sal*suavizador.tanResina.vol).toFixed(2)} kg de sal`;
+    txt += '</p>';
+    
+    labelSal.innerHTML=txt;
 }
 
 const despliegaCapacidadIntercambio = ( ) => {
@@ -124,7 +131,7 @@ const despliegaCapacidadIntercambio = ( ) => {
 }
 
 const despliegaCantidadAgua = ( ) => {
-    let txt='<p align="center"><b>'
+    let txt='<p align="center"><b>';
     txt += `Cantidad aproximada de agua que puede suavizar: ${ (cantAgua).toFixed(0)} litros<br><br>`;
     const tmin  = cantAgua/(60*Qmax);
     const hmin   = Math.floor(tmin);
@@ -156,7 +163,7 @@ const despliegaInfoTanque = ( ) => {
     //txt += `Cantidad de resina: ${suavizador.tanResina.vol} ft³ = ${(Number(suavizador.tanResina.vol)*28.3168).toFixed(2)} litros<br>`;
     // txt += `Caudal mínimo: ${(Qmin).toFixed(2)} lpm<br>`;
     // txt += `Caudal máximo: ${(Qmax).toFixed(2)} lpm<br>`;
-    txt += '<br>*Los siguientes cálculos se realizan suponiendo la cantidad de resina es:';
+    txt += '<br>Nota: Los siguientes cálculos se realizan suponiendo la cantidad de resina es:';
     txt += ` ${suavizador.tanResina.vol} ft³ = ${(Number(suavizador.tanResina.vol)*28.3168).toFixed(2)} litros<br>`;
     txt += '</p>';
     infoTanque.innerHTML=txt;
