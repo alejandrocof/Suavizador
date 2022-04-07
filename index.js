@@ -120,7 +120,7 @@ const despliegaCantidadSal = ( ) => {
     txt += `Cantidad de sal: ${(sal*suavizador.tanResina.vol).toFixed(2)} kg<br><br>`;
     txt += `Para preparar la salmuera se requiere:<br>`;
     txt += `${Math.round(2*sal*suavizador.tanResina.vol/0.360)/2} litros de agua `;
-    txt += `y por lo menos ${(sal*suavizador.tanResina.vol).toFixed(2)} kg de sal`;
+    txt += `y por lo menos ${(sal*suavizador.tanResina.vol).toFixed(2)} kg de sal<br>`;
     txt += '</p>';
     
     labelSal.innerHTML=txt;
