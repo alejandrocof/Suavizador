@@ -30,21 +30,9 @@
             <div class="center" id="infoTanque"></div>
         </div>
 
-            <hr size="1px" color="#387af3" />
+            <!-- <hr size="1px" color="#387af3" /> -->
 
-        <div >
-            <br>
-            <label class="center"><b>Establezca el caudal en modo servicio de su suavizador:</b></label>
-            <br>
-            <div class="center">
-                <span id="spanQmin">lpm</span>
-                <input id="inputQ" type="range" step="1" width="30" min="4" max="18" value="10">
-                <span id="spanQmax">lpm</span>
-            </div>
-            <label class="center" id="labelQ"></label>
-        </div>
-    
-            <hr size="1px" color="#387af3" />
+        
             
         <div>
             <br>
@@ -58,35 +46,48 @@
             <label class="center" id="labelDureza"></label>
             <br>
 
-            <hr size="1px" color="#387af3" />
+            <!-- <hr size="1px" color="#387af3" /> -->
 
-            <br>
-            <!-- <label class="center">Intervalo de sal recomendado para regeneración</label> -->
-            <!-- <label class="center">Intervalo de sal sugerido para regenerar la resina</label> -->
+            <!-- <br>
             <label class="center"><b>Seleccione la cantidad de sal para la regeneración:</b></label>
             <br>
             <div class="center">
                 <span id="minSal">100</span>
-                <input id="cantidadSal" type="range" step="0.5" width="30" min="3" max="7" value="5.5">
+                <input id="cantidadSal" type="range" step="0.25" width="30" min="5.5" max="7" value="5.5">
                 <span id="maxSal">500</span>
-            </div>
+            </div> -->
             <label class="center" id="labelSal"></label>
-            <br>
-            <label class="center">*Se recomienda 5.5kg por cada ft³ de resina, por omisión el control deslizante se encuentra en dicha posición.</label>
-            <label class="center">**Es preferible poner más sal de la requerida, si se pone la cantidad de agua indicada el agua sólo disolvera la sal calculada.</label>
+            <!-- <br> -->
+            <!-- <label class="center">*Se recomienda 5.5kg por cada ft³ de resina, por omisión el control deslizante se encuentra en dicha posición.</label>
+            <label class="center">**Es preferible poner más sal de la requerida, si se pone la cantidad de agua indicada el agua sólo disolvera la sal calculada.</label> -->
+
+            <!-- <br> -->
+            <!-- <label class="center" id="labelCapacidadIntercambio"></label> -->
+            <!-- <br> -->
+            <label class="center" id="labelCantidadAgua"></label>
+
+
         </div>
-
-        <br>
-
         <hr size="1px" color="#387af3" />
+        <br>
 
-        <!-- <br> -->
-        <!-- <label class="center" id="labelCapacidadIntercambio"></label> -->
-        <!-- <br> -->
-        <label class="center" id="labelCantidadAgua"></label>
         <br>
-        <br>
-        <br>
+        <div >
+            <label class="center"><b>Si conoce el caudal de agua</b></label>
+            <label class="center"><b>Establezca el caudal en modo servicio de su suavizador:</b></label>
+            <!-- <label class="center"><b>Si conoce el caudal de agua en modo servicio se puede aproximar la duración entre regeneraciones:</b></label> -->
+            <br>
+            <div class="center">
+                <span id="spanQmin">lpm</span>
+                <input id="inputQ" type="range" step="1" width="30" min="4" max="18" value="10">
+                <span id="spanQmax">lpm</span>
+            </div>
+            <label class="center" id="labelQ"></label>
+            <label class="center" id="labelDuracion"></label>
+            <br>
+        </div>
+            
+        <hr size="1px" color="#387af3" />
         <br>
 
         <div class="contenedor-div">

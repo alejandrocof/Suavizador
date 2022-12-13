@@ -2,9 +2,9 @@
 
 const optSuav       = document.querySelector( '#suavSelect' );
 
-const spanMinSal    = document.querySelector( '#minSal' );
-const spanMaxSal    = document.querySelector( '#maxSal' );
-const inputSal      = document.querySelector( '#cantidadSal' );
+// const spanMinSal    = document.querySelector( '#minSal' );
+// const spanMaxSal    = document.querySelector( '#maxSal' );
+// const inputSal      = document.querySelector( '#cantidadSal' );
 const labelSal      = document.querySelector( '#labelSal' );
 
 const spanQmin      = document.querySelector( '#spanQmin' );
@@ -17,12 +17,13 @@ const labelDureza   = document.querySelector( '#labelDureza' );
 const labelCapInt   = document.querySelector( '#labelCapacidadIntercambio' );
 const labelCantAgua = document.querySelector( '#labelCantidadAgua' );
 const infoTanque    = document.querySelector( '#infoTanque' );
+const labelDuracion = document.querySelector( '#labelDuracion' );
 
 
 
 let suavizador=suavizadores[0];
 let dureza=200;
-let sal=5.5;
+let sal=7;
 let capIntercambio;
 let cantAgua;
 let Qmin;
@@ -41,7 +42,7 @@ const addSuav = ( suav, index ) => {
 
 optSuav.addEventListener('change', ( suav ) => {
     suavizador = suavizadores[ suav.target.value ];
-    rangoSal( suavizador.tanResina.vol );
+    // rangoSal( suavizador.tanResina.vol );
     rangoQ();
     despliega();
     // const resultado = document.querySelector('.resultado');
@@ -54,30 +55,31 @@ inputQ.oninput = ( slider ) => {
     despliega();
 };
 
-inputSal.oninput = ( slider ) => {
-    sal=slider.target.value;
-    despliega();
-};
+// inputSal.oninput = ( slider ) => {
+//     sal=slider.target.value;
+//     despliega();
+// };
 
 inputDureza.oninput = ( slider ) => {
     dureza=slider.target.value
     despliega();
 };
 
-const rangoSal = ( ) => {
-    const volResina=suavizador.tanResina.vol;
-    const min=3*volResina;
-    const max=7*volResina;
-    const media=5*volResina;
+// const rangoSal = ( ) => {
+//     const volResina=suavizador.tanResina.vol;
+//     const min=5.5*volResina;
+//     const max=7*volResina;
+//     const media=5*volResina;
 
-    spanMinSal.textContent=`${Number(min).toFixed(2)} kg`;
-    spanMaxSal.textContent=`${Number(max).toFixed(2)} kg`;
-    //despliegaCantidadSal( inputSal.value );
-}
+//     spanMinSal.textContent=`${Number(min).toFixed(2)} kg`;
+//     spanMaxSal.textContent=`${Number(max).toFixed(2)} kg (Saturación)`;
+//     //despliegaCantidadSal( inputSal.value );
+// }
 
 const rangoQ = ( ) => {
     const d=Number(suavizador.tanResina.diametro)*0.254;//convierte de in a dm
     const A=Math.PI*d*d/4;//área en dm²
+    //https://youtu.be/MSZmXzWIbNI?list=PLoZhJCS82iq7GyLR0HxdmzvSfELMpAEl8&t=1090
     Qmin=A*5/3;//Vmin=10m/h=100dm/60min=5/3dm/min
     Qmax=A*10;//Vmax=60m/h=600dm/60min=10dm/min
     const labelQmin = Math.round(Qmin);
@@ -117,10 +119,11 @@ const despliegaDureza = () => {
 
 const despliegaCantidadSal = ( ) => {
     let txt='<p align="center">';
-    txt += `Cantidad de sal: ${(sal*suavizador.tanResina.vol).toFixed(2)} kg<br><br>`;
+    // txt += `Cantidad de sal: ${(sal*suavizador.tanResina.vol).toFixed(2)} kg<br><br>`;
     txt += `Para preparar la salmuera se requiere:<br>`;
     txt += `${Math.round(2*sal*suavizador.tanResina.vol/0.360)/2} litros de agua `;
-    txt += `y por lo menos ${(sal*suavizador.tanResina.vol).toFixed(2)} kg de sal<br>`;
+    // txt += `${(sal*suavizador.tanResina.vol/0.360).toFixed(2)} litros de agua `;
+    txt += `y ${(sal*suavizador.tanResina.vol).toFixed(2)} kg de sal<br>`;
     txt += '</p>';
     
     labelSal.innerHTML=txt;
@@ -133,6 +136,11 @@ const despliegaCapacidadIntercambio = ( ) => {
 const despliegaCantidadAgua = ( ) => {
     let txt='<p align="center"><b>';
     txt += `Cantidad aproximada de agua que puede suavizar: ${ (cantAgua).toFixed(0)} litros<br><br>`;
+    txt += '</b></p>';
+    labelCantAgua.innerHTML=txt;
+
+    
+
     const tmin  = cantAgua/(60*Qmax);
     const hmin   = Math.floor(tmin);
     const minmin = Math.ceil((tmin-hmin)*60);
@@ -144,6 +152,7 @@ const despliegaCantidadAgua = ( ) => {
     const h   = Math.floor(t);
     const min = Math.ceil((t-h)*60);
 
+    txt='<p align="center"><b>';
     txt +='Tiempo de trabajo aproximado: ';
     txt +=`${ h } horas`;
     txt +=` ${min} minutos<br>`;
@@ -154,7 +163,8 @@ const despliegaCantidadAgua = ( ) => {
     // txt +=` ${minmax} minutos)<br>`;
 
     txt += '</b></p>';
-    labelCantAgua.innerHTML=txt;
+
+    labelDuracion.innerHTML=txt;
 }
 
 const despliegaInfoTanque = ( ) => {
@@ -163,8 +173,8 @@ const despliegaInfoTanque = ( ) => {
     //txt += `Cantidad de resina: ${suavizador.tanResina.vol} ft³ = ${(Number(suavizador.tanResina.vol)*28.3168).toFixed(2)} litros<br>`;
     // txt += `Caudal mínimo: ${(Qmin).toFixed(2)} lpm<br>`;
     // txt += `Caudal máximo: ${(Qmax).toFixed(2)} lpm<br>`;
-    txt += '<br>Nota: Los siguientes cálculos se realizan suponiendo la cantidad de resina es:';
-    txt += ` ${suavizador.tanResina.vol} ft³ = ${(Number(suavizador.tanResina.vol)*28.3168).toFixed(2)} litros<br>`;
+    txt += '<br>Nota: Los cálculos suponen que su suavizador contiene';
+    txt += ` ${suavizador.tanResina.vol} ft³ = ${(Number(suavizador.tanResina.vol)*28.3168).toFixed(2)} litros de resina<br>`;
     txt += '</p>';
     infoTanque.innerHTML=txt;
 
@@ -172,7 +182,7 @@ const despliegaInfoTanque = ( ) => {
 
 const init = () => {
     suavizadores.forEach( addSuav );
-    rangoSal();
+    // rangoSal();
     rangoQ();
     despliega();
 }
@@ -193,3 +203,5 @@ const despliega = () =>{
 }
 
 init();
+
+
